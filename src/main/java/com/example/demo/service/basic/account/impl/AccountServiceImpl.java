@@ -3,6 +3,8 @@ package com.example.demo.service.basic.account.impl;
 import com.example.demo.dao.auth.accountrole.AccountRoleRepository;
 import com.example.demo.dao.auth.role.RoleRepository;
 import com.example.demo.dao.basic.account.AccountRepository;
+import com.example.demo.dao.hibernate.basic.account.api.IAccountDao;
+import com.example.demo.model.api.account.AccountResultModel;
 import com.example.demo.model.auth.AccountRoleModel;
 import com.example.demo.model.auth.RoleModel;
 import com.example.demo.model.basic.AccountModel;
@@ -45,6 +47,9 @@ public class AccountServiceImpl implements IAccountService {
 
     @Resource(name = "accountRoleRepository")
     private AccountRoleRepository accountRoleRepository;
+
+    @Resource(name = "accountDao")
+    private IAccountDao accountDao;
 
     @Override
     public AccountModel findById(int id) throws Exception {
@@ -108,6 +113,19 @@ public class AccountServiceImpl implements IAccountService {
             accountModelList.add(accountRoleModel.getAccountModel());
         }
         return accountModelList;
+    }
+
+    @Override
+    public List<AccountResultModel> queryModels(String accountName, String roleName) throws Exception {
+        AccountModel accountModel = new AccountModel();
+        if (!"all".equals(accountName)) {
+            accountModel.setAccountName(accountName);
+        }
+        RoleModel roleModel = new RoleModel();
+        if (!"all".equals(roleName)) {
+            roleModel.setRoleName(roleName);
+        }
+        return this.accountDao.queryModels(accountModel, roleModel);
     }
 
 

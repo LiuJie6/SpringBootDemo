@@ -1,5 +1,6 @@
 package com.example.demo.controller.basic;
 
+import com.example.demo.model.api.account.AccountResultModel;
 import com.example.demo.model.basic.AccountModel;
 import com.example.demo.model.response.ResponseResult;
 import com.example.demo.model.state.State;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +37,7 @@ public class AccountManageController {
                                 @RequestParam(value = "accountPassword") String accountPassword,
                                 long roleId) throws Exception {
         try {
-            AccountModel accountModel = this.accountService.save(accountName, accountPassword,roleId);
+            AccountModel accountModel = this.accountService.save(accountName, accountPassword, roleId);
             Map<String, Object> map = new HashMap<>();
             map.put("accountModel", accountModel);
             return new ResponseResult(true, State.SUCCESS.getCode(), "", map);
@@ -54,6 +56,19 @@ public class AccountManageController {
             return new ResponseResult(true, State.SUCCESS.getCode(), "", map);
         } catch (Exception e) {
             return new ResponseResult(false, State.FAILURE.getCode(), "");
+        }
+    }
+
+    @PostMapping("hibernate/queryModels")
+    public Object queryModels(@RequestParam(value = "accountName", defaultValue = "all") String accountName,
+                              @RequestParam(value = "roleName", defaultValue = "all") String roleName) throws Exception {
+        try {
+            List<AccountResultModel> accountResultModelList = this.accountService.queryModels(accountName, roleName);
+            Map<String, Object> map = new HashMap<>();
+            map.put("accountResultModelList", accountResultModelList);
+            return new ResponseResult(true, State.SUCCESS.getCode(), "", map);
+        } catch (Exception e) {
+            return new ResponseResult(false, State.FAILURE.getCode(), e.getMessage());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.basic.account.api;
 
+import com.example.demo.model.api.account.AccountResultModel;
 import com.example.demo.model.basic.AccountModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,4 +27,6 @@ public interface IAccountService {
     AccountModel save(String accountName, String accountPassword, long roleId) throws Exception;
 
     List<AccountModel> queryModels(String accountName, String roleName, int pageIndex, int pageSize);
+
+    List<AccountResultModel> queryModels(String accountName, String roleName) throws Exception;
 }
