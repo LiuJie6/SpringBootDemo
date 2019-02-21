@@ -82,7 +82,7 @@ public class AccountServiceImpl implements IAccountService {
     }
 
     @Override
-    public Page<AccountModel> queryModels(String accountName, String roleName, int pageIndex, int pageSize) {
+    public List<AccountModel> queryModels(String accountName, String roleName, int pageIndex, int pageSize) {
         Pageable pageable = new PageRequest(pageIndex, pageSize, Sort.Direction.DESC);
 
         Specification<AccountRoleModel> specification = new Specification<AccountRoleModel>() {
@@ -90,11 +90,11 @@ public class AccountServiceImpl implements IAccountService {
             public Predicate toPredicate(Root<AccountRoleModel> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> list = new ArrayList<>();
                 if (StringUtils.isNotBlank(accountName)) {
-                    Join<AccountModel,AccountRoleModel> join = root.join("accountModel",JoinType.LEFT);
+                    Join<AccountModel, AccountRoleModel> join = root.join("accountModel", JoinType.LEFT);
                     list.add(criteriaBuilder.like(join.<AccountModel>get("accountModel").get("accountName").as(String.class), "%" + accountName + "%"));
                 }
                 if (StringUtils.isNotBlank(roleName)) {
-                    Join<RoleModel,AccountRoleModel> join = root.join("roleModel",JoinType.LEFT);
+                    Join<RoleModel, AccountRoleModel> join = root.join("roleModel", JoinType.LEFT);
                     list.add(criteriaBuilder.like(join.<RoleModel>get("roleModel").get("roleName").as(String.class), "%" + roleName + "%"));
                 }
                 Predicate[] pre = new Predicate[list.size()];
@@ -102,7 +102,12 @@ public class AccountServiceImpl implements IAccountService {
                 return criteriaBuilder.and(list.toArray(pre));
             }
         };
-        return null;
+        Page<AccountRoleModel> accountRoleModels = this.accountRoleRepository.findAll(specification, pageable);
+        List<AccountModel> accountModelList = new ArrayList<>();
+        for (AccountRoleModel accountRoleModel : accountRoleModels) {
+            accountModelList.add(accountRoleModel.getAccountModel());
+        }
+        return accountModelList;
     }
 
 
