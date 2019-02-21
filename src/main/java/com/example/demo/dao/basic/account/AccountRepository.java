@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Project Name:springbootdemo
- * File Name:IAccountDao
+ * File Name:AccountRepository
  * Package Name:com.example.demo.dao.basic.account
  * Date:2019/2/20
  * Author:liujie
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 
 
-@Repository("accountDao")
-public interface IAccountDao extends JpaRepository<AccountModel, Integer> {
+@Repository("accountRepository")
+public interface AccountRepository extends JpaRepository<AccountModel, Integer> {
 
     @Query(value = "SELECT model from AccountModel model where accountId=:accountId")
     AccountModel findById(int accountId);

@@ -13,7 +13,7 @@ import java.io.Serializable;
  * Copyright (c) 2019, 重庆云凯科技有限公司 All Rights Reserved.
  */
 
-@MappedSuperclass
+@MappedSuperclass         //该注解表明该类不会再数据库中生成表，但该类的字段会出现在子类的表中
 public class OriginalModel implements Serializable{
 
 }

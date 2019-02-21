@@ -1,6 +1,6 @@
 package com.example.demo.service.basic.account.impl;
 
-import com.example.demo.dao.basic.account.IAccountDao;
+import com.example.demo.dao.basic.account.AccountRepository;
 import com.example.demo.model.basic.AccountModel;
 import com.example.demo.service.basic.account.api.IAccountService;
 import org.springframework.stereotype.Service;
@@ -23,17 +23,17 @@ import java.time.Instant;
 @Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
-    @Resource(name = "accountDao")
-    private IAccountDao accountDao;
+    @Resource(name = "accountRepository")
+    private AccountRepository accountRepository;
 
     @Override
     public AccountModel findById(int id) throws Exception {
-        return this.accountDao.findById(id);
+        return this.accountRepository.findById(id);
     }
 
     @Override
     public AccountModel queryModel(int id, String accountName) {
-        return this.accountDao.queryModel(id, accountName);
+        return this.accountRepository.queryModel(id, accountName);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AccountServiceImpl implements IAccountService {
         accountModel.setAccountPassword(accountPassword);
         accountModel.setCreateTime(Timestamp.from(Instant.now()));
         accountModel.setUpdateTime(Timestamp.from(Instant.now()));
-        return this.accountDao.save(accountModel);
+        return this.accountRepository.save(accountModel);
     }
 
 

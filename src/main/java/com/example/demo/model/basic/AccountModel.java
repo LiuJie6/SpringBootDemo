@@ -32,6 +32,7 @@ public class AccountModel extends OriginalModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "account_id")
     public int getAccountId() {
         return accountId;
     }
