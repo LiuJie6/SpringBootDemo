@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 @Table(name = "account")
 public class AccountModel extends OriginalModel{
 
-    private int accountId;
+    private long accountId;
 
     private String accountName;
 
@@ -33,11 +33,11 @@ public class AccountModel extends OriginalModel{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id")
-    public int getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(int accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 

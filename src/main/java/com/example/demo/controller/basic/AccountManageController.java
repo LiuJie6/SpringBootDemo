@@ -32,9 +32,10 @@ public class AccountManageController {
 
     @GetMapping("create")
     public Object createAccount(@RequestParam(value = "accountName") String accountName,
-                                @RequestParam(value = "accountPassword") String accountPassword) throws Exception {
+                                @RequestParam(value = "accountPassword") String accountPassword,
+                                long roleId) throws Exception {
         try {
-            AccountModel accountModel = this.accountService.save(accountName, accountPassword);
+            AccountModel accountModel = this.accountService.save(accountName, accountPassword,roleId);
             Map<String, Object> map = new HashMap<>();
             map.put("accountModel", accountModel);
             return new ResponseResult(true, State.SUCCESS.getCode(), "", map);

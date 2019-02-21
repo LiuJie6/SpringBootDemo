@@ -6,3 +6,7 @@
 ## 3.3 可以在启动类中引入SessionFactory Bean，使用hibernate的相关方法
 # 4 spring-boot-starter-parent 是spring boot项目的父级依赖，之后的<dependency>可以不用注明<version>（视情况而定）
 ## 版本在2.0.0以上时，HibernateJpaSessionFactoryBean会变成已废弃，项目配置也需要改变
+
+# 5 @ManyToOne(cascade = CascadeType.ALL)级联操作
+## 在哪个对象中的相应属性中设置了级联，那么在操作该对象时级联生效。
+## 如果想让有关系的双方同时级联生效，那么级联要在两个对象中同时设置

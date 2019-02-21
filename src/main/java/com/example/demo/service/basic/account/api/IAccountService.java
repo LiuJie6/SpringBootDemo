@@ -1,6 +1,8 @@
 package com.example.demo.service.basic.account.api;
 
 import com.example.demo.model.basic.AccountModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Project Name:springbootdemo
@@ -19,5 +21,7 @@ public interface IAccountService {
 
     AccountModel queryModel(int id, String accountName) throws Exception;
 
-    AccountModel save(String accountName, String accountPassword) throws Exception;
+    AccountModel save(String accountName, String accountPassword, long roleId) throws Exception;
+
+    Page<AccountModel> queryModels(String accountName, String roleName, int pageIndex, int pageSize);
 }
